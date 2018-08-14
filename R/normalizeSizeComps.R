@@ -32,7 +32,7 @@ normalizeSizeComps<-function(dfr,
   if (verbose) cat("#--Step 1-------------------------------------\n");
   idq.size<-paste0("`",id.size,"`");
   idq.value<-paste0("`",id.value,"`");
-  cat("#--id.faqs: ",id.facs,"\n");
+  if (verbose) cat("#--id.faqs: ",id.facs,"\n");
   if (wtsUtilities::isBlankString(id.facs)) {
     idx<-!(names(tmp) %in% c(id.size,id.value));
     id.facs<-names(tmp)[idx];

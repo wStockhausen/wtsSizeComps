@@ -32,7 +32,7 @@ addSampleSizes<-function(dfr,
   if (!is.null(id.facs)) idq.facs<-paste0("`",id.facs,"`");
 
   #--Step 3: calculate sample sizes by factor combination
-  cat("\n#--Step 3-------------------------------------\n");
+  if (verbose) cat("\n#--Step 3-------------------------------------\n");
   #----Example query:
   # qry<-"select
   #         fishery,area,`shell condition`,year,
@@ -71,7 +71,7 @@ addSampleSizes<-function(dfr,
   tmp1<-sqldf::sqldf(qry);
 
   #--Step 4: combine size compositions and sample size information
-  cat("\n#--Step 4-------------------------------------\n");
+  if (verbose) cat("\n#--Step 4-------------------------------------\n");
   #--Example query:
   # qry<-"select
   #         u.fishery,u.area,u.`shell condition`,u.year,

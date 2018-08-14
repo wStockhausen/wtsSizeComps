@@ -126,7 +126,7 @@ rebinSizeComps<-function(dfr,
       }
     }
   }
-  cat("#--str.factors string = ",str.factors,"\n")
+  if (verbose) cat("#--str.factors string = ",str.factors,"\n")
   qry<-gsub("&&factors",  str.factors, qry, fixed=TRUE);
   qry<-gsub("&&idq.size",  idq.size,     qry, fixed=TRUE);
   qry<-gsub("&&idq.value", idq.value,    qry, fixed=TRUE);

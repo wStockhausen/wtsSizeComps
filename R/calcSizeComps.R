@@ -42,7 +42,7 @@ calcSizeComps<-function(dfrZ,
                         id.scalefacs=id.normfacs,
                         verbose=FALSE){
   tmp0<-dfrZ;
-  cat("#-In calcSizeComps(): names(tmp0) = ",names(tmp0),"\n");
+  if (verbose) cat("#-In calcSizeComps(): names(tmp0) = ",names(tmp0),"\n");
   #--Step 1: bin counts/abundance to size bins and expand to all sizes
   tmp1<-rebinSizeComps(tmp0,
                        id.size=id.size,
@@ -53,16 +53,16 @@ calcSizeComps<-function(dfrZ,
                        truncate.high=truncate.high,
                        expandToAllFactorCombos=expandToAllFactorCombos,
                        verbose=verbose);
-  if(verbose) cat("-In calcSizeComps(): number of NAs after rebinning =",sum(is.na(tmp1[[id.value]])),"\n")
-  cat("#-In calcSizeComps(): names(tmp1) = ",names(tmp1),"\n");
+  if (verbose) cat("-In calcSizeComps(): number of NAs after rebinning =",sum(is.na(tmp1[[id.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): names(tmp1) = ",names(tmp1),"\n");
 
   #--Step 2: add sample sizes in column "ss"
   tmp2 <- addSampleSizes(tmp1,
                          id.size=id.size,
                          id.value=id.value,
-                         verbose=TRUE);
-  if(verbose) cat("-In calcSizeComps(): number of NAs after adding sample sizes =",sum(is.na(tmp2[[id.value]])),"\n")
-  cat("#-In calcSizeComps(): names(tmp2) = ",names(tmp2),"\n");
+                         verbose=verbose);
+  if (verbose) cat("-In calcSizeComps(): number of NAs after adding sample sizes =",sum(is.na(tmp2[[id.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): names(tmp2) = ",names(tmp2),"\n");
 
   if (normalize){
     #--Step 3: normalize size compositions to sum to 1 across a subset of factors
@@ -81,8 +81,8 @@ calcSizeComps<-function(dfrZ,
   }
   idp.value <- id.value;
   if (normalize) idp.value <- "fraction";
-  if(verbose) cat("-In calcSizeComps(): number of NAs after normalizing =",sum(is.na(tmp3[[idp.value]])),"\n")
-  cat("#-In calcSizeComps(): names(tmp3) = ",names(tmp3),"\n");
+  if (verbose) cat("-In calcSizeComps(): number of NAs after normalizing =",sum(is.na(tmp3[[idp.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): names(tmp3) = ",names(tmp3),"\n");
 
   if (rescale){
     #--step 4: re-scale size compositions across a subset of factors
@@ -91,14 +91,14 @@ calcSizeComps<-function(dfrZ,
                          id.value=idp.value,
                          id.scalefacs=id.scalefacs,
                          id.scalevalue=id.scalevalue,
-                         verbose=TRUE);
+                         verbose=verbose);
   } else {
     tmp4 <- tmp3;
   }
   idp.value <- id.value;
   if (rescale) idp.value <- id.scalevalue;
-  if(verbose) cat("-In calcSizeComps(): number of NAs after rescaling =",sum(is.na(tmp4[[idp.value]])),"\n")
-  cat("#-In calcSizeComps(): names(tmp4) = ",names(tmp4),"\n");
+  if (verbose) cat("-In calcSizeComps(): number of NAs after rescaling =",sum(is.na(tmp4[[idp.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): names(tmp4) = ",names(tmp4),"\n");
 
   return(tmp4);
 }
