@@ -37,8 +37,10 @@ rebinSizeComps<-function(dfr,
   idq.value<-paste0("`",id.value,"`");
   if (wtsUtilities::isBlankString(id.facs)) id.facs<-names(tmp)[!(names(tmp) %in% c(id.size,id.value))];
   idq.facs<-paste0("`",id.facs,"`");
+
   #--Step 1: rebin compositions (if necessary) to new size bins
   if (verbose) cat("#--Step 1-------------------------------------\n");
+  if (verbose) cat("#----nrow(dfr) =",nrow(tmp),"\n");
   if (is.null(cutpts)) {
     cutpts<-data.frame(size=min(tmp$size,na.RM=TRUE):(max(tmp$size,na.rm=TRUE)+1));
     newcutpts<-cutpts;
@@ -48,7 +50,10 @@ rebinSizeComps<-function(dfr,
     if (!truncate.low ) newcutpts[1]<-0;
     if (!truncate.high) newcutpts[nCPs]<-Inf;
   }
-  if (verbose) cat("#--cutpoints:",cutpts,"\n");
+  if (verbose) {
+    cat("#--no. cutpoints :",length(cutpts),"\n");
+    cat("#--cutpoints:",cutpts,"\n");
+  }
   cuts<-cut(tmp[[id.size]],newcutpts,right=FALSE,labels=FALSE);#make cuts based on new bins adjusted for truncation
   tmp[[id.size]]<-cutpts[cuts];                                #assign to original bins using cutpoints
   tmp<-tmp[!is.na(tmp[[id.size]]),];#drop truncated data
@@ -81,6 +86,7 @@ rebinSizeComps<-function(dfr,
   qry<-gsub("&&idq.value", idq.value,   qry, fixed=TRUE);
   if (verbose) cat("Query to rebin size comps:\n",qry,"\n");
   tmp1<-sqldf::sqldf(qry);
+  if (verbose) cat("nrow(rebinned) =",nrow(tmp1),"\n");
 
   #--Step 2: determine unique factor x size combinations
   if (verbose) cat("\n#--Step 2-------------------------------------\n");
@@ -90,7 +96,7 @@ rebinSizeComps<-function(dfr,
                      id.facs=id.facs,
                      cutpts=cutpts,
                      expandToAllFactorCombos=expandToAllFactorCombos,
-                     verbose=verbose)
+                     verbose=verbose);
 
   #--Step 3 expand to all sizes
   if (verbose) cat("\n#--Step 3-------------------------------------\n");
@@ -109,7 +115,7 @@ rebinSizeComps<-function(dfr,
   qry<-"select
           &&factors
           u.&&idq.size,t.&&idq.value
-        from uFZs as u left join tmp as t
+        from uFZs as u left join tmp1 as t
         on
           &&onCond
           t.&&idq.size    = u.&&idq.size
@@ -135,7 +141,10 @@ rebinSizeComps<-function(dfr,
   tmp3<-sqldf::sqldf(qry);
   idx<-is.na(tmp3[[id.value]]);
   tmp3[idx,id.value]<-0;
-  if (verbose) cat("#--setting",sum(idx),"NA values to 0\n");
+  if (verbose) {
+    cat("#--setting",sum(idx),"NA values to 0\n");
+    cat("#--nrow(final) =",nrow(tmp3),"\n");
+  }
 
   if (verbose) cat("#----Finished rebinSizeComps()\n");
   return(tmp3);
