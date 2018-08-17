@@ -110,6 +110,7 @@ addSampleSizes<-function(dfr,
   qry<-gsub("&&onCond",    str.onCond,  qry, fixed=TRUE);
   if (verbose) cat("Query to join ss and size composition tables:\n",qry,"\n");
   tmp2<-sqldf::sqldf(qry);
+  if (verbose) cat("#--nrow(final) =",nrow(tmp2),"\n");
 
   if (verbose) cat("#----Finished addSampleSizes\n");
   return(tmp2);

@@ -121,6 +121,7 @@ normalizeSizeComps<-function(dfr,
   idx<-is.na(tmp2[["fraction"]]);
   tmp2[idx,"fraction"]<-0;
   if (verbose) cat("#--setting",sum(idx),"NA values to 0\n");
+  if (verbose) cat("#--nrow(final) =",nrow(tmp2),"\n");
 
   if (verbose) cat("\n\n#----Finished normalizeSizeComps\n");
   return(tmp2);

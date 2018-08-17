@@ -47,35 +47,37 @@ scaleSizeComps<-function(dfrZCs,
   #         t.fishery, t.area, t.`shell condition`,
   #         t.year, t.ss, t.size,
   #         t.fraction*s.abundance as abundance
-  #       from tmp as t, dfrScalars as s
-  #       where
+  #       from tmp as t left join dfrScalars as s
+  #       on
   #         t.year    = s.year and
   #         t.fishery = s.fishery and
   #         t.area    = s.area;";
   qry<-"select
           &&idq.facs,
           t.&&idq.value*s.&&idq.scalevalue as &&idq.scalevalue
-        from tmp as t, dfrScalars as s
-        &&whereCond;";
+        from tmp as t left join dfrScalars as s
+        &&onCond;";
   str.idq.facs<-paste("t",idq.facs,sep=".",collapse=",");
-  str.where<-"";
+  str.on<-"";
   if (!wtsUtilities::isBlankString(id.scalefacs)){
-    str.where<-paste0("where t.",idq.scalefacs[1],"=s.",idq.scalefacs[1]);
+    str.on<-paste0("on t.",idq.scalefacs[1],"=s.",idq.scalefacs[1]);
     if (length(id.scalefacs)>1){
-      for (i in 2:length(id.scalefacs)) str.where<-paste0(str.where," and \n",
+      for (i in 2:length(id.scalefacs)) str.where<-paste0(str.on," and \n",
                                                           paste0("t.",idq.scalefacs[i],"=s.",idq.scalefacs[i]));
     }
   }
   qry<-gsub("&&idq.facs",       str.idq.facs,   qry, fixed=TRUE);
   qry<-gsub("&&idq.value",      idq.value,      qry, fixed=TRUE);
   qry<-gsub("&&idq.scalevalue", idq.scalevalue, qry, fixed=TRUE);
-  qry<-gsub("&&whereCond",      str.where,      qry, fixed=TRUE);
+  qry<-gsub("&&onCond",      str.on,      qry, fixed=TRUE);
   if (verbose){cat("#--idq.facs    : '",idq.facs,    "'\n",sep="");}
   if (verbose){cat("#--str.idq.facs: '",str.idq.facs,"'\n",sep="");}
-  if (verbose){cat("#--str.where   : '",str.where,   "'\n",sep="");}
-  if (verbose) cat("Query to calculate normalized compositions:\n",qry,"\n");
+  if (verbose){cat("#--str.on      : '",str.on,      "'\n",sep="");}
+  if (verbose) cat("Query to calculate scaled compositions:\n",qry,"\n");
   tmp<-sqldf::sqldf(qry);
+  if (verbose) cat("#--nrow(final) =",nrow(tmp),"\n");
 
+  if (verbose) cat("#----Finished scaleSizeComps()\n");
   return(tmp);
 }
 
