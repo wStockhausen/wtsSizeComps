@@ -62,8 +62,8 @@ scaleSizeComps<-function(dfrZCs,
   if (!wtsUtilities::isBlankString(id.scalefacs)){
     str.on<-paste0("on t.",idq.scalefacs[1],"=s.",idq.scalefacs[1]);
     if (length(id.scalefacs)>1){
-      for (i in 2:length(id.scalefacs)) str.where<-paste0(str.on," and \n",
-                                                          paste0("t.",idq.scalefacs[i],"=s.",idq.scalefacs[i]));
+      for (i in 2:length(id.scalefacs)) str.on<-paste0(str.on," and \n",
+                                                       paste0("t.",idq.scalefacs[i],"=s.",idq.scalefacs[i]));
     }
   }
   qry<-gsub("&&idq.facs",       str.idq.facs,   qry, fixed=TRUE);
@@ -75,7 +75,12 @@ scaleSizeComps<-function(dfrZCs,
   if (verbose){cat("#--str.on      : '",str.on,      "'\n",sep="");}
   if (verbose) cat("Query to calculate scaled compositions:\n",qry,"\n");
   tmp<-sqldf::sqldf(qry);
-  if (verbose) cat("#--nrow(final) =",nrow(tmp),"\n");
+  idx<-is.na(tmp[[id.scalevalue]]);
+  tmp[idx,id.scalevalue]<-0;
+  if (verbose) {
+    cat("#--setting",sum(idx),"NA values to 0\n");
+    cat("#--nrow(final) =",nrow(tmp),"\n");
+  }
 
   if (verbose) cat("#----Finished scaleSizeComps()\n");
   return(tmp);
