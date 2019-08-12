@@ -3,7 +3,7 @@
 #'
 #' @description Function to create a dataframe of "size" compositions normalized (summing to 1) across a set of factors.
 #'
-#' @param dfrZ - input dataframe with count/abundance data by size and other factors
+#' @param dfr - input dataframe with count/abundance data by size and other factors
 #' @param id.size - name of column in dfr with "size" data
 #' @param id.value - name of column in dfr with count (or abundance) values
 #' @param id.facs - character vector of column names used as factors in calculating the size compositions
@@ -12,7 +12,8 @@
 #'
 #' @return dataframe with "size" compositions normalized to sum to 1 across a set of factors.
 #'
-#' @details Uses \code{sqldf::sqldf}.
+#' @details Uses \code{sqldf::sqldf}. Note that unnormalized size compositions, as well as "raw" count data, can be
+#' converted to normalized size compositions using this function.
 #'
 #' @export
 #'
@@ -22,7 +23,7 @@ normalizeSizeComps<-function(dfr,
                              id.facs="",
                              id.normfacs="",
                              verbose=FALSE){
-  #--normalize size compositions by norm.vars so
+  #--normalize size compositions by norm.facs so
   #--they sum to 1 across remaining id.vars.
   if (verbose) cat("\n\n#----Starting normalizeSizeComps\n");
   tmp<-dfr;
@@ -62,7 +63,7 @@ normalizeSizeComps<-function(dfr,
         from tmp
         &&groupby;";
   str.groupby  <-"";
-  str.norm.vars<-"";
+  str.normfacs<-"";
   if (!wtsUtilities::isBlankString(id.normfacs)) {
     str<-paste(idq.normfacs,collapse=",");
     str.normfacs<-paste0(str,",");

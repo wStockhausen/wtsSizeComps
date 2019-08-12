@@ -8,6 +8,8 @@ normalizeSizeComps(dfr, id.size = "size", id.value = "count",
   id.facs = "", id.normfacs = "", verbose = FALSE)
 }
 \arguments{
+\item{dfr}{- input dataframe with count/abundance data by size and other factors}
+
 \item{id.size}{- name of column in dfr with "size" data}
 
 \item{id.value}{- name of column in dfr with count (or abundance) values}
@@ -17,8 +19,6 @@ normalizeSizeComps(dfr, id.size = "size", id.value = "count",
 \item{id.normfacs}{- character vector of column names of factors to normalize the size compositions across (a subset of id.facs)}
 
 \item{verbose}{- flag to print diagnostic output to console}
-
-\item{dfrZ}{- input dataframe with count/abundance data by size and other factors}
 }
 \value{
 dataframe with "size" compositions normalized to sum to 1 across a set of factors.
@@ -27,5 +27,6 @@ dataframe with "size" compositions normalized to sum to 1 across a set of factor
 Function to create a dataframe of "size" compositions normalized (summing to 1) across a set of factors.
 }
 \details{
-Uses \code{sqldf::sqldf}.
+Uses \code{sqldf::sqldf}. Note that unnormalized size compositions, as well as "raw" count data, can be
+converted to normalized size compositions using this function.
 }
