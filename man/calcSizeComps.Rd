@@ -49,6 +49,6 @@ dataframe with summed counts (or abundance) as compositions by size (and possibl
 Function to create a dataframe of "size" compositions from a dataframe with count data.
 }
 \details{
-Non-standard column names should be back-quoted. The names of columns used to normalize the composition data in dfrZ
-prior to expanding to total abundance using dfrA (id.normfacs) should represent the same factors and levels in both datasets.
+Non-standard column names should be back-quoted. The names of columns (id.normfacs) used to normalize the composition data in dfrZ
+prior to expanding to total abundance using dfrScalars should represent the same factors (id.scalefacs) and levels in both datasets.
 }

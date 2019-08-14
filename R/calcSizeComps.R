@@ -21,8 +21,8 @@
 #'
 #' @return dataframe with summed counts (or abundance) as compositions by size (and possibly other factors).
 #'
-#' @details Non-standard column names should be back-quoted. The names of columns used to normalize the composition data in dfrZ
-#' prior to expanding to total abundance using dfrA (id.normfacs) should represent the same factors and levels in both datasets.
+#' @details Non-standard column names should be back-quoted. The names of columns (id.normfacs) used to normalize the composition data in dfrZ
+#' prior to expanding to total abundance using dfrScalars should represent the same factors (id.scalefacs) and levels in both datasets.
 #'
 #' @export
 #'
@@ -53,7 +53,7 @@ calcSizeComps<-function(dfrZ,
                        truncate.high=truncate.high,
                        expandToAllFactorCombos=expandToAllFactorCombos,
                        verbose=verbose);
-  if (verbose) cat("-In calcSizeComps(): number of NAs after rebinning =",sum(is.na(tmp1[[id.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): number of NAs after rebinning =",sum(is.na(tmp1[[id.value]])),"\n")
   if (verbose) cat("#-In calcSizeComps(): names(tmp1) = ",names(tmp1),"\n");
 
   #--Step 2: add sample sizes in column "ss"
@@ -61,7 +61,7 @@ calcSizeComps<-function(dfrZ,
                          id.size=id.size,
                          id.value=id.value,
                          verbose=verbose);
-  if (verbose) cat("-In calcSizeComps(): number of NAs after adding sample sizes =",sum(is.na(tmp2[[id.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): number of NAs after adding sample sizes =",sum(is.na(tmp2[[id.value]])),"\n")
   if (verbose) cat("#-In calcSizeComps(): names(tmp2) = ",names(tmp2),"\n");
 
   if (normalize){
@@ -81,7 +81,7 @@ calcSizeComps<-function(dfrZ,
   }
   idp.value <- id.value;
   if (normalize) idp.value <- "fraction";
-  if (verbose) cat("-In calcSizeComps(): number of NAs after normalizing =",sum(is.na(tmp3[[idp.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): number of NAs after normalizing =",sum(is.na(tmp3[[idp.value]])),"\n")
   if (verbose) cat("#-In calcSizeComps(): names(tmp3) = ",names(tmp3),"\n");
 
   if (rescale){
@@ -97,7 +97,7 @@ calcSizeComps<-function(dfrZ,
   }
   idp.value <- id.value;
   if (rescale) idp.value <- id.scalevalue;
-  if (verbose) cat("-In calcSizeComps(): number of NAs after rescaling =",sum(is.na(tmp4[[idp.value]])),"\n")
+  if (verbose) cat("#-In calcSizeComps(): number of NAs after rescaling =",sum(is.na(tmp4[[idp.value]])),"\n")
   if (verbose) cat("#-In calcSizeComps(): names(tmp4) = ",names(tmp4),"\n");
 
   return(tmp4);
