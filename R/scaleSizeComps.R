@@ -6,7 +6,7 @@
 #' @param dfrZCs - input dataframe with size composition data by size and other factors
 #' @param dfrScalars - input dataframe with scalars for a subset of the factors in dfrZCs
 #' @param id.value - name of column in dfrZCs with (possibly normalized) count/abundance values
-#' @param id.scalevars - character vector of column names of factors for the values in dfrScalars to scale the size compositions in dfrZCs by
+#' @param id.scalefacs - character vector of column names of factors for the values in dfrScalars to scale the size compositions in dfrZCs by
 #' @param id.scalevalue - name of column in dfrScalars with the values used to scale the size compositions in dfrZCs
 #' @param verbose - flag to print diagnostic output to console
 #'
@@ -14,6 +14,9 @@
 #'
 #' @details The names of columns in dfrScalars used as factors to scale the
 #' composition data in dfrZCs should be the same in both datasets.
+#'
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities isBlankString
 #'
 #' @export
 #'

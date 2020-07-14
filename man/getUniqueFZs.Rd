@@ -4,8 +4,15 @@
 \alias{getUniqueFZs}
 \title{Determine the unique factor and size combinations from a dataframe of "size" compositions}
 \usage{
-getUniqueFZs(dfr, id.size = "size", id.value = NULL, id.facs = "",
-  cutpts = NULL, expandToAllFactorCombos = FALSE, verbose = verbose)
+getUniqueFZs(
+  dfr,
+  id.size = "size",
+  id.value = NULL,
+  id.facs = "",
+  cutpts = NULL,
+  expandToAllFactorCombos = FALSE,
+  verbose = verbose
+)
 }
 \arguments{
 \item{dfr}{- input dataframe with composition data by "size" and other factors}
@@ -31,6 +38,7 @@ Function to determine the unique factor and size combinations from a dataframe o
 \details{
 If id.facs is blank, all columns other than the size and value columns
 are assumed to be factor columns.
-
+}
+\note{
 Non-standard column names SHOULD NOT be backquoted.
 }

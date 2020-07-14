@@ -4,9 +4,17 @@
 \alias{rebinSizeComps}
 \title{Re-bin "size" compositions in a dataframe to all given "size" values (and possibly all factor level combinations)}
 \usage{
-rebinSizeComps(dfr, id.size = "size", id.value = NULL, id.facs = "",
-  cutpts = NULL, truncate.low = TRUE, truncate.high = FALSE,
-  expandToAllFactorCombos = TRUE, verbose = FALSE)
+rebinSizeComps(
+  dfr,
+  id.size = "size",
+  id.value = NULL,
+  id.facs = "",
+  cutpts = NULL,
+  truncate.low = TRUE,
+  truncate.high = FALSE,
+  expandToAllFactorCombos = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfr}{- input dataframe with composition data by "size" and other factors}
@@ -26,8 +34,6 @@ rebinSizeComps(dfr, id.size = "size", id.value = NULL, id.facs = "",
 \item{expandToAllFactorCombos}{- flag to expand to all factor combinations (TRUE) or only observed combinations (FALSE)}
 
 \item{verbose}{- flag to print diagnostic output to console}
-
-\item{id.ss}{- name of column in dfr with sample sizes}
 }
 \value{
 dataframe with compositions by size (and possibly other factors) expanded to all sizes by either unique or all factor combinations.

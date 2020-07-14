@@ -12,8 +12,11 @@
 #'
 #' @return dataframe with "size" compositions normalized to sum to 1 across a set of factors.
 #'
-#' @details Uses \code{sqldf::sqldf}. Note that unnormalized size compositions, as well as "raw" count data, can be
+#' @details Note that unnormalized size compositions, as well as "raw" count data, can be
 #' converted to normalized size compositions using this function.
+#'
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities isBlankString
 #'
 #' @export
 #'

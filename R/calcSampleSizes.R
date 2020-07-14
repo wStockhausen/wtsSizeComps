@@ -13,6 +13,9 @@
 #' @details Uses \code{sqldf::sqldf}. Note that sample sizes can be calculated from unnormalized size compositions,
 #' as well as "raw" count data, using this function.
 #'
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities isBlankString
+#'
 #' @export
 #'
 calcSampleSizes<-function(dfr,
@@ -68,7 +71,7 @@ calcSampleSizes<-function(dfr,
   if (verbose) cat("#--Query to calculate sample sizes:\n",qry,"\n");
   tmp1<-sqldf::sqldf(qry);
 
-  if (verbose) cat("#--nrow(final) =",nrow(tmp2),"\n");
+  if (verbose) cat("#--nrow(final) =",nrow(tmp1),"\n");
 
   if (verbose) cat("\n\n#----Finished calcSampleSizes\n");
   return(tmp1);

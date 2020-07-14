@@ -4,8 +4,7 @@
 \alias{calcSampleSizes}
 \title{Calculate sample sizes from count or "size" composition data across a set of factors}
 \usage{
-calcSampleSizes(dfr, id.value = "count", id.facs = "",
-  verbose = FALSE)
+calcSampleSizes(dfr, id.value = "count", id.facs = "", verbose = FALSE)
 }
 \arguments{
 \item{dfr}{- input dataframe with count/abundance data by size and other factors}

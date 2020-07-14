@@ -1,18 +1,16 @@
 Package: wtsSizeComps
 Type: Package
 Title: Various functions for dealing with size compositions
-Version: 2019.09.13
-Date: 2019-09.13
+Version: 2020.07.14
+Date: 2020-07-14
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: Contains various functions for dealing with size compositions.
-License: MIT
+License: MIT + file LICENSE
 Requires:
     wtsUtilities (>= 2018.02.08)
-    ggplot2 (>= 2.2.1),
-    reshape2 (>= 1.4.3),
     sqldf (0.4-11)
 Imports:
     wtsUtilities,
-    ggplot2
-RoxygenNote: 6.1.1
+    sqldf
+RoxygenNote: 7.1.1

@@ -4,12 +4,23 @@
 \alias{calcSizeComps}
 \title{Create "size" compositions from a dataframe with count data}
 \usage{
-calcSizeComps(dfrZ, id.size = "size", id.value = "abundance",
-  id.facs = "", cutpts = NULL, truncate.low = FALSE,
-  truncate.high = FALSE, expandToAllFactorCombos = FALSE,
-  normalize = FALSE, id.normfacs = "", rescale = FALSE,
-  dfrScalars = NULL, id.scalevalue, id.scalefacs = id.normfacs,
-  verbose = FALSE)
+calcSizeComps(
+  dfrZ,
+  id.size = "size",
+  id.value = "abundance",
+  id.facs = "",
+  cutpts = NULL,
+  truncate.low = FALSE,
+  truncate.high = FALSE,
+  expandToAllFactorCombos = FALSE,
+  normalize = FALSE,
+  id.normfacs = "",
+  rescale = FALSE,
+  dfrScalars = NULL,
+  id.scalevalue,
+  id.scalefacs = id.normfacs,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfrZ}{- input dataframe with count/abundance data by size and other factors}
@@ -20,9 +31,15 @@ calcSizeComps(dfrZ, id.size = "size", id.value = "abundance",
 
 \item{id.facs}{- character vector of column names to use as factors in calculating size compositions}
 
+\item{cutpts}{- cut points for size bins}
+
 \item{truncate.low}{-flag to truncate counts/abundance below the minimum size or include in first size bin (FALSE)}
 
 \item{truncate.high}{- flag to truncate counts/abundance above the maximum size (TRUE) or include in final size bin (FALSE)}
+
+\item{expandToAllFactorCombos}{- flag (T/F) to expand size comps to include all factor combinations}
+
+\item{normalize}{- flag (T/F) to normalize size comps (i.e., sum to 1 acorss normalizing factors)}
 
 \item{id.normfacs}{- character vector of column names of factors to normalize the size compositions across when scaling to total abundance}
 
@@ -30,17 +47,11 @@ calcSizeComps(dfrZ, id.size = "size", id.value = "abundance",
 
 \item{dfrScalars}{- [optional] input dataframe with scalars to apply by a subset of the factors in dfr}
 
+\item{id.scalevalue}{- column name for scale value in dfrA}
+
 \item{id.scalefacs}{- character vector of column names of factors in dfrA to scale the size compositions across}
 
 \item{verbose}{- flag to print diagnostic output to console}
-
-\item{minSize}{- min "size" cutpoint for binning counts/abundance}
-
-\item{maxSize}{- max "size" cutpoint for binning counts/abundnce}
-
-\item{binSize}{- bin "size"}
-
-\item{id.scalevalaue}{- column name for scale value in dfrA}
 }
 \value{
 dataframe with summed counts (or abundance) as compositions by size (and possibly other factors).

@@ -4,8 +4,14 @@
 \alias{scaleSizeComps}
 \title{Scale "size" compositions in a dataframe by factor level-specific scalars}
 \usage{
-scaleSizeComps(dfrZCs, dfrScalars, id.value = "fraction",
-  id.scalefacs = "", id.scalevalue = "abundance", verbose = FALSE)
+scaleSizeComps(
+  dfrZCs,
+  dfrScalars,
+  id.value = "fraction",
+  id.scalefacs = "",
+  id.scalevalue = "abundance",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfrZCs}{- input dataframe with size composition data by size and other factors}
@@ -14,11 +20,11 @@ scaleSizeComps(dfrZCs, dfrScalars, id.value = "fraction",
 
 \item{id.value}{- name of column in dfrZCs with (possibly normalized) count/abundance values}
 
+\item{id.scalefacs}{- character vector of column names of factors for the values in dfrScalars to scale the size compositions in dfrZCs by}
+
 \item{id.scalevalue}{- name of column in dfrScalars with the values used to scale the size compositions in dfrZCs}
 
 \item{verbose}{- flag to print diagnostic output to console}
-
-\item{id.scalevars}{- character vector of column names of factors for the values in dfrScalars to scale the size compositions in dfrZCs by}
 }
 \value{
 dataframe with scaled compositions by size (and possibly other factors).

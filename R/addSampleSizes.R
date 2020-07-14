@@ -12,6 +12,8 @@
 #'
 #' @details Non-standard column names SHOULD NOT be back-quoted.
 #'
+#' @importFrom sqldf sqldf
+#'
 #' @export
 #'
 addSampleSizes<-function(dfr,

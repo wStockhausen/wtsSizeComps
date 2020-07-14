@@ -16,7 +16,10 @@
 #' @details If id.facs is blank, all columns other than the size and value columns
 #' are assumed to be factor columns.
 #'
-#' Non-standard column names SHOULD NOT be backquoted.
+#' @note Non-standard column names SHOULD NOT be backquoted.
+#'
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities isBlankString
 #'
 #' @export
 #'

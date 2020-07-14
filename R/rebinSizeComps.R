@@ -6,7 +6,6 @@
 #' @param dfr - input dataframe with composition data by "size" and other factors
 #' @param id.size - name of column in dfr with "size" data
 #' @param id.value - name of column in dfr with count (or abundance) values
-#' @param id.ss - name of column in dfr with sample sizes
 #' @param id.facs - character vector of factor column names
 #' @param cutpts - vector of cutpoints to use for re-binning size compositions
 #' @param truncate.low -flag to truncate size compositions below the minimum size (TRUE) or include in smallest size bin (FALSE)
@@ -17,6 +16,9 @@
 #' @return dataframe with compositions by size (and possibly other factors) expanded to all sizes by either unique or all factor combinations.
 #'
 #' @details Non-standard column names SHOULD NOT be back-quoted.
+#'
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities isBlankString
 #'
 #' @export
 #'

@@ -4,8 +4,14 @@
 \alias{normalizeSizeComps}
 \title{Normalize "size" compositions across a set of factors}
 \usage{
-normalizeSizeComps(dfr, id.size = "size", id.value = "count",
-  id.facs = "", id.normfacs = "", verbose = FALSE)
+normalizeSizeComps(
+  dfr,
+  id.size = "size",
+  id.value = "count",
+  id.facs = "",
+  id.normfacs = "",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfr}{- input dataframe with count/abundance data by size and other factors}
@@ -27,6 +33,6 @@ dataframe with "size" compositions normalized to sum to 1 across a set of factor
 Function to create a dataframe of "size" compositions normalized (summing to 1) across a set of factors.
 }
 \details{
-Uses \code{sqldf::sqldf}. Note that unnormalized size compositions, as well as "raw" count data, can be
+Note that unnormalized size compositions, as well as "raw" count data, can be
 converted to normalized size compositions using this function.
 }

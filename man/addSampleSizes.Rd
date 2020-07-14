@@ -4,8 +4,7 @@
 \alias{addSampleSizes}
 \title{Add sample sizes to "size" compositions in a dataframe}
 \usage{
-addSampleSizes(dfr, id.size = "size", id.value = NULL,
-  verbose = FALSE)
+addSampleSizes(dfr, id.size = "size", id.value = NULL, verbose = FALSE)
 }
 \arguments{
 \item{dfr}{- input dataframe with composition data by "size" and other factors}
