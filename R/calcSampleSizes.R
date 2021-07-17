@@ -22,8 +22,6 @@ calcSampleSizes<-function(dfr,
                           id.value="count",
                           id.facs="",
                           verbose=FALSE){
-  #--normalize size compositions by norm.facs so
-  #--they sum to 1 across remaining id.vars.
   if (verbose) cat("\n\n#----Starting calcSampleSizes\n");
   tmp<-dfr;
   if (verbose) cat("#--names(tmp): ",names(tmp),"\n");
