@@ -4,14 +4,28 @@
 \alias{addSampleSizes}
 \title{Add sample sizes to "size" compositions in a dataframe}
 \usage{
-addSampleSizes(dfr, id.size = "size", id.value = NULL, verbose = FALSE)
+addSampleSizes(
+  dfr,
+  id.facs = "",
+  id.size = "size",
+  id.value = "N",
+  dfrSS = NULL,
+  id.ss = "ss",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfr}{- input dataframe with composition data by "size" and other factors}
 
+\item{id.facs}{- character vector of column names used as factors in calculating the sample sizes}
+
 \item{id.size}{- name of column in dfr with "size" data}
 
-\item{id.value}{- name of column in dfr with count (or abundance) values}
+\item{id.value}{- name of column in dfr with count data}
+
+\item{dfrSS}{- previously calculated dataframe with sample sizes by "other factors" (or NULL)}
+
+\item{id.ss}{- name of column in dfrSS with sample sizes}
 
 \item{verbose}{- flag to print diagnostic output to console}
 }
@@ -22,5 +36,8 @@ dataframe with original size compositions and sample sizes in column "ss".
 Function to add sample sizes to "size" compositions in a dataframe.
 }
 \details{
-Non-standard column names SHOULD NOT be back-quoted.
+Non-standard column names SHOULD NOT be back-quoted. If \code{dfrSS} is
+provided, it will be used as the source of the sample size information (useful
+for appending modified sample sizes to size compositions); otherwise, "raw"
+sample sizes are calculated directly from \code{dfr}.
 }

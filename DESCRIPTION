@@ -1,8 +1,8 @@
 Package: wtsSizeComps
 Type: Package
 Title: Various functions for dealing with size compositions
-Version: 2020.07.14
-Date: 2020-07-14
+Version: 2023.03.20
+Date: 2023-03-20
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: Contains various functions for dealing with size compositions.
@@ -13,4 +13,4 @@ Requires:
 Imports:
     wtsUtilities,
     sqldf
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
