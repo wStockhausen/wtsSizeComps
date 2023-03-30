@@ -41,7 +41,7 @@ rebinSizeComps<-function(dfr,
   idq.facs<-paste0("`",id.facs,"`");
 
   #--Step 1: rebin compositions (if necessary) to new size bins
-  if (verbose) cat("#--Step 1-------------------------------------\n");
+  if (verbose) cat("#--rebinSizeComps: Step 1-------------------------------------\n");
   if (verbose) cat("#----nrow(dfr) =",nrow(tmp),"\n");
   if (is.null(cutpts)) {
     cutpts<-data.frame(size=min(tmp$size,na.RM=TRUE):(max(tmp$size,na.rm=TRUE)+1));
@@ -88,7 +88,7 @@ rebinSizeComps<-function(dfr,
   qry<-gsub("&&idq.value", idq.value,   qry, fixed=TRUE);
   if (verbose) cat("Query to rebin size comps:\n",qry,"\n");
   tmp1<-sqldf::sqldf(qry);
-  if (verbose) cat("nrow(rebinned) =",nrow(tmp1),"\n");
+  if (verbose) cat("rebinSizeComps: nrow(rebinned) =",nrow(tmp1),"\n");
 
   #--Step 2: determine unique factor x size combinations
   if (verbose) cat("\n#--Step 2-------------------------------------\n");
@@ -101,7 +101,7 @@ rebinSizeComps<-function(dfr,
                      verbose=verbose);
 
   #--Step 3 expand to all sizes
-  if (verbose) cat("\n#--Step 3-------------------------------------\n");
+  if (verbose) cat("\n#--rebinSizeComps: Step 3-------------------------------------\n");
   #--Example query:
   # qry<-"select
   #         u.fishery,u.area,u.`shell condition`,u.year,
@@ -134,18 +134,18 @@ rebinSizeComps<-function(dfr,
       }
     }
   }
-  if (verbose) cat("#--str.factors string = ",str.factors,"\n")
+  if (verbose) cat("#----rebinSizeComps: str.factors string = ",str.factors,"\n")
   qry<-gsub("&&factors",  str.factors, qry, fixed=TRUE);
   qry<-gsub("&&idq.size",  idq.size,     qry, fixed=TRUE);
   qry<-gsub("&&idq.value", idq.value,    qry, fixed=TRUE);
   qry<-gsub("&&onCond",   str.onCond,  qry, fixed=TRUE);
-  if (verbose) cat("Query to expand abundance to sizes:\n",qry,"\n");
+  if (verbose) cat("#----rebinSizeComps: Query to expand abundance to sizes:\n",qry,"\n");
   tmp3<-sqldf::sqldf(qry);
   idx<-is.na(tmp3[[id.value]]);
   tmp3[idx,id.value]<-0;
   if (verbose) {
-    cat("#--setting",sum(idx),"NA values to 0\n");
-    cat("#--nrow(final) =",nrow(tmp3),"\n");
+    cat("#----rebinSizeComps: setting",sum(idx),"NA values to 0\n");
+    cat("#----rebinSizeComps: nrow(final) =",nrow(tmp3),"\n");
   }
 
   if (verbose) cat("#----Finished rebinSizeComps()\n");

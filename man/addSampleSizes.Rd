@@ -6,7 +6,7 @@
 \usage{
 addSampleSizes(
   dfr,
-  id.facs = "",
+  id.facs = NULL,
   id.size = "size",
   id.value = "N",
   dfrSS = NULL,
@@ -17,7 +17,7 @@ addSampleSizes(
 \arguments{
 \item{dfr}{- input dataframe with composition data by "size" and other factors}
 
-\item{id.facs}{- character vector of column names used as factors in calculating the sample sizes}
+\item{id.facs}{- character vector of column names used as factors in calculating the sample sizes (or NULL)}
 
 \item{id.size}{- name of column in dfr with "size" data}
 

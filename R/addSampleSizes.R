@@ -4,7 +4,7 @@
 #' @description Function to add sample sizes to "size" compositions in a dataframe.
 #'
 #' @param dfr - input dataframe with composition data by "size" and other factors
-#' @param id.facs - character vector of column names used as factors in calculating the sample sizes
+#' @param id.facs - character vector of column names used as factors in calculating the sample sizes (or NULL)
 #' @param id.size - name of column in dfr with "size" data
 #' @param id.value - name of column in dfr with count data
 #' @param dfrSS - previously calculated dataframe with sample sizes by "other factors" (or NULL)
@@ -23,7 +23,7 @@
 #' @export
 #'
 addSampleSizes<-function(dfr,
-                         id.facs="",
+                         id.facs=NULL,
                          id.size="size",
                          id.value="N",
                          dfrSS=NULL,
@@ -32,29 +32,33 @@ addSampleSizes<-function(dfr,
   if (verbose) cat("\n\n#----Starting addSampleSizes\n");
   tmp<-dfr;
   #--Step 1: determine sample sizes
+  if (verbose) cat("\n#----addSampleSizes: Step 1-------------------------------------\n");
   if (is.null(dfrSS)){
     #--calculate sample sizes from size composition values
+    if (verbose) cat("\n#------addSampleSizes: calculating sample sizes-------------------------------------\n");
     #--Step 1a: get factors (assumed to be all columns other than size and value if id.facs is NULL)
-    if (verbose) cat("\n#--Step 1-------------------------------------\n");
+    if (verbose) cat("\n#------addSampleSizes: Step 1a-------------------------------------\n");
     if (is.null(id.facs)) id.facs<-names(tmp)[!(names(tmp) %in% c(id.size,id.value))];
-    if (verbose) cat("#--id.facs =",paste(paste0("'",id.facs,"'",collapse=","),"\n"));
+    if (verbose) cat("#--------addSampleSizes: id.facs =",paste(paste0("'",id.facs,"'",collapse=","),"\n"));
 
     #--Step 1b: calculate sample sizes
     tmp1<-calcSampleSizes(tmp,id.value=id.value,id.facs=id.facs,verbose=verbose);
   } else {
     #--copy sample sizes from input dataframe
+    if (verbose) cat("\n#----addSampleSizes: copying sample sizes from input dataframe\n");
     tmp1<-dfrSS;
     i<-which(names(tmp1)==id.ss);
     names(tmp1)[i]<-"ss";#--make sure sample size column is named 'ss'
   }
 
   #--Step 2: backquote column names
+  if (verbose) cat("\n#--addSampleSizes: Step 2-------------------------------------\n");
   idq.size<-paste0("`",id.size,"`");
   idq.value<-paste0("`",id.value,"`");
   idq.facs<-paste0("`",id.facs,"`");
 
   #--Step 3: combine size compositions and sample size information
-  if (verbose) cat("\n#--Step 4-------------------------------------\n");
+  if (verbose) cat("\n#--addSampleSizes: Step 3-------------------------------------\n");
   #--Example query:
   # qry<-"select
   #         u.fishery,u.area,u.`shell condition`,u.year,
@@ -91,9 +95,9 @@ addSampleSizes<-function(dfr,
   qry<-gsub("&&idq.size",  idq.size,    qry, fixed=TRUE);
   qry<-gsub("&&idq.value", idq.value,   qry, fixed=TRUE);
   qry<-gsub("&&onCond",    str.onCond,  qry, fixed=TRUE);
-  if (verbose) cat("Query to join ss and size composition tables:\n",qry,"\n");
+  if (verbose) cat("#------Query to join ss and size composition tables:\n",qry,"\n");
   tmp2<-sqldf::sqldf(qry);
-  if (verbose) cat("#--nrow(final) =",nrow(tmp2),"\n");
+  if (verbose) cat("#------nrow(final) =",nrow(tmp2),"\n");
 
   if (verbose) cat("#----Finished addSampleSizes\n");
   return(tmp2);

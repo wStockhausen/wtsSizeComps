@@ -33,13 +33,13 @@ getUniqueFZs<-function(dfr,
   if (verbose) cat("\n\n#----Starting getUniqueFZs\n");
   tmp<-dfr;
   #--Step 1: back-quote column names
-  if (verbose) cat("\n#--Step 1-------------------------------------\n");
+  if (verbose) cat("\n#--getUniqueFZs: Step 1-------------------------------------\n");
   idq.size<-paste0("`",id.size,"`");
   idq.value<-paste0("`",id.value,"`");
   idq.facs<-paste0("`",id.facs,"`");
 
   #--Step 2: determine unique factor combinations
-  if (verbose) cat("\n#--Step 2-------------------------------------\n");
+  if (verbose) cat("\n#--getUniqueFZs: Step 2-------------------------------------\n");
   if (wtsUtilities::isBlankString(id.facs)) id.facs<-names(tmp)[!(names(tmp) %in% c(id.size,id.value))];
   if (verbose) cat("#--id.facs =",paste(paste0("'",id.facs,"'",collapse=","),"\n"));
   if (expandToAllFactorCombos) {
@@ -63,7 +63,7 @@ getUniqueFZs<-function(dfr,
     if (verbose) cat("Query to calculate factor combinations:\n",qry,"\n");
     uFs <- sqldf::sqldf(qry);
   } else {
-    if (verbose) cat("#----Expanding to realized factor combinations.\n");
+    if (verbose) cat("#----getUniqueFZs: Expanding to realized factor combinations.\n");
     tmp2<-unique(tmp[,id.facs]);
     uFs<-tmp2;
   }
@@ -74,7 +74,7 @@ getUniqueFZs<-function(dfr,
   }
 
   #--Step 3: determine unique sizes
-  if (verbose) cat("\n#--Step 3-------------------------------------\n");
+  if (verbose) cat("\n#--getUniqueFZs: Step 3-------------------------------------\n");
   if (is.null(cutpts)){
     qry<-"select distinct &&idq.size from tmp order by &&idq.size";
     qry<-gsub("&&idq.size",idq.size,qry, fixed=TRUE);
@@ -91,7 +91,7 @@ getUniqueFZs<-function(dfr,
   }
 
   #--Step 4: determine unique factor x size combinations
-  if (verbose) cat("\n#--Step 4-------------------------------------\n");
+  if (verbose) cat("\n#--getUniqueFZs: Step 4-------------------------------------\n");
   uFZs<-sqldf::sqldf("select * from uFs,uZs;");
 
   if (verbose) {
