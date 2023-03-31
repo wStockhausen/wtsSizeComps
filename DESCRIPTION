@@ -1,8 +1,8 @@
 Package: wtsSizeComps
 Type: Package
 Title: Various functions for dealing with size compositions
-Version: 2023.03.30
-Date: 2023-03-30
+Version: 2023.03.31
+Date: 2023-03-31
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: Contains various functions for dealing with size compositions.
@@ -11,6 +11,12 @@ Requires:
     wtsUtilities (>= 2018.02.08)
     sqldf (0.4-11)
 Imports:
-    wtsUtilities,
-    sqldf
+    dplyr,
+    ggplot2,
+    ggridges,
+    rlang,
+    scales,
+    sqldf,
+    wtsPlots,
+    wtsUtilities
 RoxygenNote: 7.2.3
