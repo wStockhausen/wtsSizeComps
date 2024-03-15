@@ -44,17 +44,16 @@ rebinSizeComps<-function(dfr,
   if (verbose) cat("#--rebinSizeComps: Step 1-------------------------------------\n");
   if (verbose) cat("#----nrow(dfr) =",nrow(tmp),"\n");
   if (is.null(cutpts)) {
-    cutpts<-data.frame(size=min(tmp$size,na.RM=TRUE):(max(tmp$size,na.rm=TRUE)+1));
-    newcutpts<-cutpts;
+    newcutpts<-min(tmp$size,na.RM=TRUE):(max(tmp$size,na.rm=TRUE)+1);
   } else {
     nCPs<-length(cutpts);
     newcutpts<-cutpts;#make copy to apply truncation correctly
-    if (!truncate.low ) newcutpts[1]<-0;
-    if (!truncate.high) newcutpts[nCPs]<-Inf;
+    if (!truncate.low ) newcutpts[1]    = -Inf;
+    if (!truncate.high) newcutpts[nCPs] =  Inf;
   }
   if (verbose) {
-    cat("#--no. cutpoints :",length(cutpts),"\n");
-    cat("#--cutpoints:",cutpts,"\n");
+    cat("#--no. bins :",length(newcutpts)-1,"\n");
+    cat("#--actual cutpoints:",newcutpts,"\n");
   }
   cuts<-cut(tmp[[id.size]],newcutpts,right=FALSE,labels=FALSE);#make cuts based on new bins adjusted for truncation
   tmp[[id.size]]<-cutpts[cuts];                                #assign to original bins using cutpoints

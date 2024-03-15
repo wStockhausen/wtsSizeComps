@@ -61,7 +61,7 @@ plotSizeCompsAsRidges<-function(dfr_,
   sym_yps = rlang::sym(y_positions);
   sym_clr = rlang::sym(colour);
   sym_fil = rlang::sym(fill);
-  #--aggregate size comps by size over grouping variables (if requested)
+  #--aggregate size comps by size across grouping variables (if requested)
   if (!is.null(group_by)){
     syms_vrs = rlang::syms(c(group_by,sizes_in));
     dfr = dfr |>
