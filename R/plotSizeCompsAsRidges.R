@@ -3,28 +3,32 @@
 #'
 #' @description Function to plot annual size comps (or other similar) using \pkg{ggridges}
 #'
-#' @param dfr_ : input dataframe
-#' @param sizes_in : name of column with "size" information (default = "size")
-#' @param values_in : name of column with "abundance" information (default = "abundance")
-#' @param y_positions : name of column with vertical axis location information (default = "year")
-#' @param removeZeros : remove comps with zero abundance in all bins(default = TRUE)
-#' @param reverseY : reverse y scale (default = FALSE)
-#' @param colour : column name colour variable (default = NULL)
-#' @param fill : column name for fill variable (default = NULL)
-#' @param group_by : string vector with column names for grouping before summarizing (default = value of y_positions)
-#' @param normalize_by : string vector with column names for grouping before normalizing (default = NULL)
-#' @param xlim : x axis limits (default = c(0,200))
-#' @param ylim : y axis limits (default = c(1980,2022))
-#' @param x_breaks : x axis breaks (default = seq(5,200,5))
-#' @param y_breaks : y axis breaks (default = seq(1900,2100,5))
-#' @param legend.position : legend position (as in [ggplot2::theme()], default = c(0.98,0.98))
-#' @param legend.justification : legend justification on plot (as in [ggplot2::theme()], default = c(1,1))
+#' @param dfr_ - input dataframe
+#' @param sizes_in - name of column with "size" information (default = "size")
+#' @param values_in - name of column with "abundance" information (default = "abundance")
+#' @param y_positions - name of column with vertical axis location information (default = "year")
+#' @param removeZeros - remove comps with zero abundance in all bins(default = TRUE)
+#' @param reverseY - reverse y scale (default = FALSE)
+#' @param colour - column name for colour variable (default = NULL)
+#' @param fill - column name for fill variable (default = NULL)
+#' @param group_by - string vector with column names for grouping before summarizing (default = value of y_positions)
+#' @param normalize_by - string vector with column names for grouping before normalizing (default = NULL)
+#' @param xlim - x axis limits (default = c(0,200))
+#' @param ylim - y axis limits (default = c(1980,2022))
+#' @param x_breaks - x axis breaks (default = seq(5,200,5))
+#' @param y_breaks - y axis breaks (default = seq(1900,2100,5))
+#' @param legend.position - legend position (as in [ggplot2::theme()], default = c(0.98,0.98))
+#' @param legend.justification - legend justification on plot (as in [ggplot2::theme()], default = c(1,1))
 #'
 #' @return \pkg{ggplot2} plot object
 #'
 #' @details
 #' Uses [ggridges::geom_density_ridges()] to plot the size compositions.
 #' The returned plot object can be faceted, etc., for more complex plotting situations.
+#'
+#' Aggregation will be performed after grouping the data using [dplyr::group_by()], where
+#' the grouping structure is a combination of the variables specified in `group_by`,
+#' `colour`, and `fill`.
 #'
 #' @import dplyr
 #' @import ggplot2
@@ -52,18 +56,21 @@ plotSizeCompsAsRidges<-function(dfr_,
                           y_breaks=seq(1900,2100,5),
                           legend.position=c(0.98,0.98),
                           legend.justification = c(1,1)){
+  debug=FALSE;
   #--keep only relevant columns
-  keep_cols = names(dfr_) %in% c(group_by,normalize_by,y_positions,sizes_in,values_in);
+  keep_cols = names(dfr_) %in% c(group_by,normalize_by,y_positions,sizes_in,values_in,colour,fill);
   dfr = dfr_[,keep_cols];
+  if (debug) cat("1:",names(dfr),"\n")
   #--create syms for size, value and y_position columns
   sym_siz = rlang::sym(sizes_in);
   sym_val = rlang::sym(values_in);
   sym_yps = rlang::sym(y_positions);
-  sym_clr = rlang::sym(colour);
-  sym_fil = rlang::sym(fill);
+  sym_clr = NULL; if (!is.null(colour)) sym_clr = rlang::sym(colour);
+  sym_fil = NULL; if (!is.null(fill))   sym_fil = rlang::sym(fill);
   #--aggregate size comps by size across grouping variables (if requested)
   if (!is.null(group_by)){
-    syms_vrs = rlang::syms(c(group_by,sizes_in));
+    gb = unique(c(group_by,sizes_in,colour,fill));
+    syms_vrs = rlang::syms(c(gb));
     dfr = dfr |>
               dplyr::group_by(!!!syms_vrs) |>
               dplyr::summarize(tot_=wtsUtilities::Sum(!!sym_val)) |>
@@ -72,6 +79,7 @@ plotSizeCompsAsRidges<-function(dfr_,
   } else {
     dfr[["tot_"]] = dfr[[values_in]];#--copy values to column named "tot_"
   }
+  if (debug) cat("2:",names(dfr),"\n")
   #--remove size comps with zero "mass" at all sizes (if requested)
   if (removeZeros){
     #--calculate years with non-zero size comps
@@ -85,6 +93,7 @@ plotSizeCompsAsRidges<-function(dfr_,
     dfr = dfr |> dplyr::inner_join(tmp);
     rm(syms_vrs,tmp);
   }
+  if (debug) cat("3:",names(dfr),"\n")
   #--normalize size comps over normalizing variables (if requested)
   if (!is.null(normalize_by)){
     syms_vrs = rlang::data_syms(normalize_by);
@@ -94,12 +103,14 @@ plotSizeCompsAsRidges<-function(dfr_,
               dplyr::ungroup();
     rm(syms_vrs);
   }
+  if (debug) cat("4:",names(dfr),"\n")
   #------plot size comps as ridges
   if (!is.null(group_by)){
     syms_vrs = rlang::syms(group_by);
   } else {
     rlang::syms(y_positions);
   }
+  if (debug) cat("5:",names(dfr),"\n")
   p = ggplot(data=dfr,mapping=aes(x=!!sym_siz,y=!!sym_yps,colour=!!sym_clr,fill=!!sym_fil)) +
        ggridges::geom_density_ridges(mapping=aes(group=paste0(!!!syms_vrs),height=tot_),stat="identity",alpha=0.4)+
        guides(fill=guide_legend(override.aes=list(alpha=1)))+

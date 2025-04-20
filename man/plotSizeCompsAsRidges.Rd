@@ -24,37 +24,37 @@ plotSizeCompsAsRidges(
 )
 }
 \arguments{
-\item{dfr_}{: input dataframe}
+\item{dfr_}{- input dataframe}
 
-\item{sizes_in}{: name of column with "size" information (default = "size")}
+\item{sizes_in}{- name of column with "size" information (default = "size")}
 
-\item{values_in}{: name of column with "abundance" information (default = "abundance")}
+\item{values_in}{- name of column with "abundance" information (default = "abundance")}
 
-\item{y_positions}{: name of column with vertical axis location information (default = "year")}
+\item{y_positions}{- name of column with vertical axis location information (default = "year")}
 
-\item{removeZeros}{: remove comps with zero abundance in all bins(default = TRUE)}
+\item{removeZeros}{- remove comps with zero abundance in all bins(default = TRUE)}
 
-\item{reverseY}{: reverse y scale (default = FALSE)}
+\item{reverseY}{- reverse y scale (default = FALSE)}
 
-\item{colour}{: column name colour variable (default = NULL)}
+\item{colour}{- column name for colour variable (default = NULL)}
 
-\item{fill}{: column name for fill variable (default = NULL)}
+\item{fill}{- column name for fill variable (default = NULL)}
 
-\item{group_by}{: string vector with column names for grouping before summarizing (default = value of y_positions)}
+\item{group_by}{- string vector with column names for grouping before summarizing (default = value of y_positions)}
 
-\item{normalize_by}{: string vector with column names for grouping before normalizing (default = NULL)}
+\item{normalize_by}{- string vector with column names for grouping before normalizing (default = NULL)}
 
-\item{xlim}{: x axis limits (default = c(0,200))}
+\item{xlim}{- x axis limits (default = c(0,200))}
 
-\item{ylim}{: y axis limits (default = c(1980,2022))}
+\item{ylim}{- y axis limits (default = c(1980,2022))}
 
-\item{x_breaks}{: x axis breaks (default = seq(5,200,5))}
+\item{x_breaks}{- x axis breaks (default = seq(5,200,5))}
 
-\item{y_breaks}{: y axis breaks (default = seq(1900,2100,5))}
+\item{y_breaks}{- y axis breaks (default = seq(1900,2100,5))}
 
-\item{legend.position}{: legend position (as in [ggplot2::theme()], default = c(0.98,0.98))}
+\item{legend.position}{- legend position (as in [ggplot2::theme()], default = c(0.98,0.98))}
 
-\item{legend.justification}{: legend justification on plot (as in [ggplot2::theme()], default = c(1,1))}
+\item{legend.justification}{- legend justification on plot (as in [ggplot2::theme()], default = c(1,1))}
 }
 \value{
 \pkg{ggplot2} plot object
@@ -65,4 +65,8 @@ Function to plot annual size comps (or other similar) using \pkg{ggridges}
 \details{
 Uses [ggridges::geom_density_ridges()] to plot the size compositions.
 The returned plot object can be faceted, etc., for more complex plotting situations.
+
+Aggregation will be performed after grouping the data using [dplyr::group_by()], where
+the grouping structure is a combination of the variables specified in `group_by`,
+`colour`, and `fill`.
 }
