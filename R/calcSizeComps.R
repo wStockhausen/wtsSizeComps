@@ -11,12 +11,12 @@
 #' @param truncate.low -flag to truncate counts/abundance below the minimum size or include in first size bin (FALSE)
 #' @param truncate.high - flag to truncate counts/abundance above the maximum size (TRUE) or include in final size bin (FALSE)
 #' @param expandToAllFactorCombos - flag (T/F) to expand size comps to include all factor combinations
-#' @param normalize - flag (T/F) to normalize size comps (i.e., sum to 1 acorss normalizing factors)
+#' @param normalize - flag (T/F) to normalize size comps (i.e., sum to 1 across normalizing factors)
 #' @param id.normfacs - character vector of column names of factors to normalize the size compositions across when scaling to total abundance
-#' @param rescale - flag to rescale size compositions by factor combination using scalars in dfrA
-#' @param dfrScalars - [optional] input dataframe with scalars to apply by a subset of the factors in dfr
-#' @param id.scalefacs - character vector of column names of factors in dfrA to scale the size compositions across
-#' @param id.scalevalue - column name for scale value in dfrA
+#' @param rescale - flag to rescale size compositions by factor combination using scalars in dfrScalars
+#' @param dfrScalars - [optional] input dataframe with scalars to apply by a subset of the factors in dfrZ
+#' @param id.scalefacs - character vector of column names of factors in dfrScalars to scale the size compositions across
+#' @param id.scalevalue - column name for scale value in dfrScalars
 #' @param verbose - flag to print diagnostic output to console
 #'
 #' @return dataframe with summed counts (or abundance) as compositions by size (and possibly other factors).
